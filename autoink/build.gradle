@@ -41,9 +41,9 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-group='com.hensh'
+group = 'com.hensh'
 archivesBaseName = "autoIncrementor"
-version='1.0'
+version = '1.0'
 
 uploadArchives {
 
@@ -56,10 +56,10 @@ uploadArchives {
                 packaging 'jar'
                 // optionally artifactId can be defined here
                 description 'Automated version incrementioning.'
-                url 'https://github.com/SunnyDayDev/examples-simple-gradle-plugin'
+                url 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
 
                 scm {
-                    url 'https://github.com/SunnyDayDev/examples-simple-gradle-plugin'
+                    url 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
                 }
 
                 licenses {
@@ -71,17 +71,14 @@ uploadArchives {
 
                 developers {
                     developer {
-                        id 'sunnydaydev'
-                        name 'Aleksandr Tcikin'
-                        email 'mail@sunnydaydev.me'
+                        id 'IlyaSergeev'
+                        name 'Ilya Sergeev'
+                        email 'master.hensh@gmail.com'
                     }
                 }
             }
 
             repository(url: uri('../app/repo'))
-
         }
-
     }
-
 }
