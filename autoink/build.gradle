@@ -1,0 +1,87 @@
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+sourceSets {
+
+    main {
+
+        java.srcDirs += 'src/main/kotlin'
+
+    }
+
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation gradleApi()
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    compileOnly "com.android.tools.build:gradle:3.2.1"
+
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+group='com.hensh'
+archivesBaseName = "autoIncrementor"
+version='1.0'
+
+uploadArchives {
+
+    repositories {
+
+        mavenDeployer {
+
+            pom.project {
+                name 'AutoIncrementor'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Automated version incrementioning.'
+                url 'https://github.com/SunnyDayDev/examples-simple-gradle-plugin'
+
+                scm {
+                    url 'https://github.com/SunnyDayDev/examples-simple-gradle-plugin'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'sunnydaydev'
+                        name 'Aleksandr Tcikin'
+                        email 'mail@sunnydaydev.me'
+                    }
+                }
+            }
+
+            repository(url: uri('../app/repo'))
+
+        }
+
+    }
+
+}
