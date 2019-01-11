@@ -2,14 +2,34 @@ apply plugin: 'kotlin'
 apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'
 
+apply plugin: 'java-gradle-plugin'
+
+group = 'xyz.ilyasergeev'
+version = '0.6'
+
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'com.hensh.autoink'
+            implementationClass = 'com.hensh.autoink.GreetingPlugin'
+        }
+    }
+}
+
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
+sourceSets {
+    main {
+        java.srcDirs += 'src/main/kotlin'
+    }
+}
+
 publish {
 
-    def groupProjectID = 'xyz.ilyasergeev'
+    def groupProjectID = group
     def artifactProjectID = 'autoink'
-    def publishVersionID = '0.2'
+    def publishVersionID = version
 
     userOrg = 'ilyasergeev'
     repoName = 'repo'
