@@ -9,7 +9,7 @@ publish {
 
     def groupProjectID = 'xyz.ilyasergeev'
     def artifactProjectID = 'autoink'
-    def publishVersionID = '0.1'
+    def publishVersionID = '0.2'
 
     userOrg = 'ilyasergeev'
     repoName = 'repo'
@@ -20,15 +20,7 @@ publish {
     website = 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
 }
 
-sourceSets {
 
-    main {
-
-        java.srcDirs += 'src/main/kotlin'
-
-    }
-
-}
 
 dependencies {
 
