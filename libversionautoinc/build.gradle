@@ -1,28 +1,22 @@
 apply plugin: 'kotlin'
-apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'
-
 apply plugin: 'java-gradle-plugin'
 
 group = 'xyz.ilyasergeev'
 version = '0.6'
+def libname = 'version-auto-inc'
 
 gradlePlugin {
     plugins {
         greetingsPlugin {
-            id = 'xyz.ilyasergeev.autoink'
+            id = "${group}.${libname}"
             implementationClass = 'com.hensh.autoink.GreetingPlugin'
         }
     }
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
-sourceSets {
-    main {
-        java.srcDirs += 'src/main/kotlin'
-    }
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 publish {
@@ -38,32 +32,4 @@ publish {
     publishVersion = publishVersionID
     desc = 'First Sample of Android Studio plugin'
     website = 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
-}
-
-
-
-dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation gradleApi()
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-    compileOnly "com.android.tools.build:gradle:3.2.1"
-
-}
-
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
 }

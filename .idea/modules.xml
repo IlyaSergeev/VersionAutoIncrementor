@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Autoincremention.iml" filepath="$PROJECT_DIR$/Autoincremention.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoink/autoink.iml" filepath="$PROJECT_DIR$/autoink/autoink.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libversionautoinc/libversionautoinc.iml" filepath="$PROJECT_DIR$/libversionautoinc/libversionautoinc.iml" />
     </modules>
   </component>
 </project>
