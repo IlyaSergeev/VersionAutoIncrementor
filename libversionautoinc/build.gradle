@@ -17,6 +17,8 @@ gradlePlugin {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    compileOnly "com.android.tools.build:gradle:3.2.1"
 }
 
 publish {
@@ -34,17 +36,6 @@ publish {
     website = 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
 }
 
-dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation gradleApi()
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-    compileOnly "com.android.tools.build:gradle:3.2.1"
-
-}
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
