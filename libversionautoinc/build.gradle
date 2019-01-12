@@ -1,10 +1,12 @@
 apply plugin: 'kotlin'
+apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'java-gradle-plugin'
 
 group = 'xyz.ilyasergeev'
-version = '0.8'
+version = '0.18'
 def libname = 'version-auto-inc'
+def artifactProjectID = 'autoink'
 
 gradlePlugin {
     plugins {
@@ -24,7 +26,6 @@ dependencies {
 publish {
 
     def groupProjectID = group
-    def artifactProjectID = 'autoink'
     def publishVersionID = version
 
     userOrg = 'ilyasergeev'
@@ -49,4 +50,53 @@ task sourcesJar(type: Jar) {
 
 artifacts {
     archives javadocJar, sourcesJar
+}
+
+// Отправляем
+uploadArchives {
+
+    // Перечисляем репозитории, куда отправляем
+    repositories {
+
+        mavenDeployer {
+
+            // Готовим pom, добавляем в него наши метаданные
+            pom.project {
+                name libname
+                artifactId artifactProjectID
+                packaging 'jar'
+                description 'Ничего не делающий плагин.'
+                url 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
+
+                // Информация о расположении исходников
+                scm {
+                    url 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
+                }
+
+                // Информация о лицензии
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                // Информация о разработчиках
+                developers {
+                    developer {
+                        id 'ilyasergeev'
+                        name 'Ilya Sergeev'
+                        email 'ilya.sergeev@icloud.com'
+                    }
+                }
+            }
+
+            // Путь до нашего локального репозитория
+            // app - папка нашего модуля андроид приложения
+            repository(url: uri('../app/repo'))
+
+        }
+
+    }
+
 }
