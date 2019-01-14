@@ -3,7 +3,7 @@ buildscript {
         maven { url("repo") }
     }
     dependencies {
-        classpath 'xyz.ilyasergeev:autoink:0.18'
+//        classpath 'xyz.ilyasergeev:autoink:0.18'
     }
 }
 
@@ -13,26 +13,26 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'xyz.ilyasergeev.version-auto-inc'
+//apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
-versionIncrement {
-    increments {
-
-        debug {
-            onVariants "debug"
-            versionCodeIncrement 1
-        }
-
-        release {
-
-            int increment = 1000 - versionIncrement.versionCode % 1000
-
-            onVariants "release"
-            versionCodeIncrement increment
-            versionNameIncrement "0.0.1"
-        }
-    }
-}
+//versionIncrement {
+//    increments {
+//
+//        debug {
+//            onVariants "debug"
+//            versionCodeIncrement 1
+//        }
+//
+//        release {
+//
+//            int increment = 1000 - versionIncrement.versionCode % 1000
+//
+//            onVariants "release"
+//            versionCodeIncrement increment
+//            versionNameIncrement "0.0.1"
+//        }
+//    }
+//}
 
 android {
     compileSdkVersion 28

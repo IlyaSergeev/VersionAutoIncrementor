@@ -65,3 +65,6 @@ fastlane/test_output
 fastlane/readme.md
 /.idea/vcs.xml
 /app/repo
+/.idea/
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/modules.xml
