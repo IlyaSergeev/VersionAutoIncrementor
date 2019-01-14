@@ -1,5 +1,6 @@
 package xyz.ilyasergeev.libversionautoinc
 
+import com.android.build.gradle.AppExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -9,18 +10,51 @@ import org.gradle.api.Project
 class IncrementPlugin : Plugin<Project> {
     override fun apply(project: Project) {
 
+        val store = AutoIncrementStore(project)
+
         val extension =
             project.extensions.create(
                 "versionIncrement",
-                IncrementPluginExtension::class.java)
+                IncrementPluginExtension::class.java,
+                project.container(Increment::class.java),
+                store)
 
-        project.afterEvaluate {
-            project.tasks.create("versionIncrement", IncrementTask::class.java) { task ->
+        if (project.plugins.hasPlugin(IncrementPlugin::class.java))
+        {
+            project.afterEvaluate {
+                val incExtention = project.extensions.getByType(AppExtension::class.java)
 
-                System.out.printf(extension.toString())
-                task.message = extension.message
-                task.recipient = "test"
+                incExtention.applicationVariants.all { variant ->
+                    val increment = extension.increments
+                            .find { it.variants.contains(variant.name) }
+                    if (increment != null)
+                    {
+                        val task = project.tasks.create(
+                                "increment${increment.name.capitalize()}On${variant.name.capitalize()}" ,
+                                IncrementTask::class.java
+                        ) {
+
+                            it.group = "Auto incrementor"
+
+                            System.out.printf(extension.toString())
+                            it.message = extension.versionName
+                            it.recipient = "test"
+
+                        }
+
+                        variant.preBuild.dependsOn(task)
+                    }
+                }
             }
+
+//            project.afterEvaluate {
+//                project.tasks.create("versionIncrement", IncrementTask::class.java) { task ->
+//
+//                    System.out.printf(extension.toString())
+//                    task.message = extension.message
+//                    task.recipient = "test"
+//                }
+//            }
         }
     }
 }

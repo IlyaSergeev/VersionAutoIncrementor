@@ -16,7 +16,22 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
 versionIncrement {
-    message = "Hi"
+    increments {
+
+        debug {
+            onVariants "debug"
+            versionCodeIncrement 1
+        }
+
+        release {
+
+            int increment = 1000 - versionIncrement.versionCode % 1000
+
+            onVariants "release"
+            versionCodeIncrement increment
+            versionNameIncrement "0.0.1"
+        }
+    }
 }
 
 android {
