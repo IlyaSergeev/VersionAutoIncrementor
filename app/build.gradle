@@ -15,11 +15,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
-greeting {
+versionIncrement {
     message = "Hi"
-//    greeter {
-//        name = 'Gradle'
-//    }
 }
 
 android {

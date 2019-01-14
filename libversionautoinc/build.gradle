@@ -12,7 +12,7 @@ gradlePlugin {
     plugins {
         greetingsPlugin {
             id = "${group}.${libname}"
-            implementationClass = 'xyz.ilyasergeev.libversionautoinc.GreetingPlugin'
+            implementationClass = 'xyz.ilyasergeev.libversionautoinc.IncrementPlugin'
         }
     }
 }
@@ -65,7 +65,7 @@ uploadArchives {
                 name libname
                 artifactId artifactProjectID
                 packaging 'jar'
-                description 'Ничего не делающий плагин.'
+                description 'Version incrementing plugin.'
                 url 'https://github.com/IlyaSergeev/VersionAutoIncrementor'
 
                 // Информация о расположении исходников
