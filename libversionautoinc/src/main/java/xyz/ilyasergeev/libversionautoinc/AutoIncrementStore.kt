@@ -11,7 +11,7 @@ class AutoIncrementStore(private val project : Project)
 {
     companion object
     {
-        private const val FIELD_BUILD_NUMBER = "BUILD_NUMBER"
+        private const val FIELD_BUILD_NUMBER = "LAST_BUILD_NUMBER"
     }
 
     var buildNumber : Int?
@@ -51,7 +51,7 @@ class AutoIncrementStore(private val project : Project)
         get() = this[FIELD_BUILD_NUMBER]?.toString()?.toIntOrNull()
         set(value)
         {
-            this[FIELD_BUILD_NUMBER] = value
+            this[FIELD_BUILD_NUMBER] = "$value"
         }
 
     private fun File.newWriter() : Writer
