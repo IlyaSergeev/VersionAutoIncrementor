@@ -5,9 +5,6 @@ package xyz.ilyasergeev.libversionautoinc
  */
 class Increment constructor(val name : String)
 {
-    var variants : Array<String> = arrayOf()
-        private set
-
     var versionCodeIncrement = 1
         private set
 
@@ -22,10 +19,5 @@ class Increment constructor(val name : String)
     fun versionNameIncrement(versionNameIncrement : String)
     {
         this.versionNameIncrement = versionNameIncrement
-    }
-
-    fun onVariants(variants : Array<String>)
-    {
-        this.variants = variants
     }
 }

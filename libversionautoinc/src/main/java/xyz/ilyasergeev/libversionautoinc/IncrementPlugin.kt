@@ -17,21 +17,52 @@ class IncrementPlugin : Plugin<Project> {
                 "versionIncrement",
                 IncrementPluginExtension::class.java,
                 project.container(Increment::class.java),
-                store)
+                store
+            )
 
-        if (project.plugins.hasPlugin(IncrementPlugin::class.java))
-        {
-            project.afterEvaluate {
+        val helloExtention =
+            project.extensions.create(
+                "hello",
+                HelloExtention::class.java
+            )
+
+        project.afterEvaluate {
+            if (project.plugins.hasPlugin(IncrementPlugin::class.java)) {
+
+                project.tasks.create(
+                    "helloTask",
+                    HelloTask::class.java
+                ) {
+                    it.message = helloExtention.message
+                    it.recipient = "test"
+
+                    project.plugins.forEach { plugin ->
+                        System.out.println("$plugin - ${plugin is IncrementPlugin}")
+                    }
+                    System.out.println("has plugin - ${project.plugins.hasPlugin(IncrementPlugin::class.java)}")
+                    val incExtention = project.extensions.getByType(AppExtension::class.java)
+
+                    incExtention.applicationVariants.all { variant ->
+                        System.out.println("variant - ${variant.name}")
+                        val increment = extension.increments
+                            .find { it.name == variant.name }
+                        if (increment != null) {
+                            System.out.println("incrementVersionOn${variant.name.capitalize()}")
+                        } else {
+                            System.out.println("no increment")
+                        }
+                    }
+                }
+
                 val incExtention = project.extensions.getByType(AppExtension::class.java)
 
                 incExtention.applicationVariants.all { variant ->
                     val increment = extension.increments
-                            .find { it.variants.contains(variant.name) }
-                    if (increment != null)
-                    {
+                        .find { it.name == variant.name }
+                    if (increment != null) {
                         val task = project.tasks.create(
-                                "increment${increment.name.capitalize()}On${variant.name.capitalize()}" ,
-                                IncrementTask::class.java
+                            "incrementVersionOn${variant.name.capitalize()}",
+                            IncrementTask::class.java
                         ) {
 
                             it.group = "Auto incrementor"
@@ -46,15 +77,6 @@ class IncrementPlugin : Plugin<Project> {
                     }
                 }
             }
-
-//            project.afterEvaluate {
-//                project.tasks.create("versionIncrement", IncrementTask::class.java) { task ->
-//
-//                    System.out.printf(extension.toString())
-//                    task.message = extension.message
-//                    task.recipient = "test"
-//                }
-//            }
         }
     }
 }

@@ -1,1 +1,1 @@
-include ':app', ':autoink', ':libversionautoinc'
+include ':app', ':libversionautoinc'
