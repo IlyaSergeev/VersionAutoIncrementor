@@ -12,17 +12,16 @@ class IncrementPlugin : Plugin<Project>
     companion object
     {
         private const val GROUP_NAME = "Version incrementation"
-        private const val BLOCK_INCREMENT_EXTENTION = "versionIncrement"
+        private const val BLOCK_INCREMENT_EXTENSION = "versionIncrement"
     }
 
     override fun apply(project : Project)
     {
-
         val store = AutoIncrementStore(project)
 
         val extension =
                 project.extensions.create(
-                        BLOCK_INCREMENT_EXTENTION ,
+                        BLOCK_INCREMENT_EXTENSION ,
                         IncrementPluginExtension::class.java ,
                         project.container(Increment::class.java) ,
                         store
@@ -32,26 +31,31 @@ class IncrementPlugin : Plugin<Project>
             if (project.plugins.hasPlugin(IncrementPlugin::class.java))
             {
 
-                project.tasks.create("helpTask" , HelpTask::class.java) { it.group = GROUP_NAME }
+                project.tasks.create("helpTask" , HelpTask::class.java) { helpTask ->
+                    helpTask.group = GROUP_NAME
+                }
 
-                val incExtention = project.extensions.getByType(AppExtension::class.java)
+                val appExtension = project.extensions.getByType(AppExtension::class.java)
 
-                incExtention.applicationVariants.all { variant ->
+                appExtension.applicationVariants.all { variant ->
                     val increment = extension.increments
-                            .find { it.name == variant.name }
+                            .find { increment -> increment.name == variant.name }
+
                     if (increment != null)
                     {
                         val task = project.tasks.create(
                                 "incrementVersionOn${variant.name.capitalize()}" ,
                                 IncrementTask::class.java
-                        ) {
+                        ) { incrementTask ->
 
-                            it.group = GROUP_NAME
+                            incrementTask.group = GROUP_NAME
 
                             System.out.printf(extension.toString())
-                            it.store = store
-                            it.startBuildNumber = increment.startBuildVersion
-                            it.buildNumberStep = increment.buildNumberStep
+                            incrementTask.store = store
+                            incrementTask.variant = variant
+                            incrementTask.startBuildNumber = increment.startBuildVersion
+                            incrementTask.buildNumberStep = increment.buildNumberStep
+                            incrementTask.appExtension = appExtension
                         }
 
                         variant.preBuild.dependsOn(task)
