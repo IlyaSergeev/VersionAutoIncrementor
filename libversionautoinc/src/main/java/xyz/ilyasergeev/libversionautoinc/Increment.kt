@@ -5,19 +5,19 @@ package xyz.ilyasergeev.libversionautoinc
  */
 class Increment constructor(val name : String)
 {
-    var versionCodeIncrement = 1
+    var startBuildVersion = 1
         private set
 
-    var versionNameIncrement = "0.0.0"
+    var buildNumberStep = 1
         private set
 
-    fun versionCodeIncrement(versionCodeIncrement : Int)
+    fun startBuildVersion(startBuildVersion : Int)
     {
-        this.versionCodeIncrement = versionCodeIncrement
+        this.startBuildVersion = startBuildVersion
     }
 
-    fun versionNameIncrement(versionNameIncrement : String)
+    fun buildNumberStep(buildNumberStep : Int)
     {
-        this.versionNameIncrement = versionNameIncrement
+        this.buildNumberStep = buildNumberStep
     }
 }

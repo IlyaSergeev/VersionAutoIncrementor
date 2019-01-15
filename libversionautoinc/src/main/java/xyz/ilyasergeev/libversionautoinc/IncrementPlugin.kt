@@ -68,7 +68,7 @@ class IncrementPlugin : Plugin<Project> {
                             it.group = GROUP_NAME
 
                             System.out.printf(extension.toString())
-                            it.message = extension.versionName
+                            it.message = extension.startBuildNumber.toString()
                             it.recipient = "test"
 
                         }

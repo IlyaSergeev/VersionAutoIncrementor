@@ -9,17 +9,12 @@ import java.util.*
  */
 class AutoIncrementStore(private val project : Project)
 {
+    companion object {
+        private const val FIELD_BUILD_NUMBER = "BUILD_NUMBER"
+    }
 
-    var versionCode : Int
-        get() = properties.versionCode ?: 1
-        internal set(value)
-        {
-            properties.versionCode = value
-            commit()
-        }
-
-    var versionName : String
-        get() = properties.versionName ?: "0.0.1"
+    var buildNumber : Int
+        get() = properties.versionName ?: 1
         internal set(value)
         {
             properties.versionName = value
@@ -51,27 +46,15 @@ class AutoIncrementStore(private val project : Project)
         }
     }
 
-    //region// Extensions
-
-    private var Properties.versionCode : Int?
-        get() = this["VERSION_CODE"]?.toString()?.toIntOrNull()
+    private var Properties.versionName : Int?
+        get() = this[FIELD_BUILD_NUMBER]?.toString()?.toIntOrNull()
         set(value)
         {
-            this["VERSION_CODE"] = value.toString()
-        }
-
-    private var Properties.versionName : String?
-        get() = this["VERSION_NAME"]?.toString()
-        set(value)
-        {
-            this["VERSION_NAME"] = value
+            this[FIELD_BUILD_NUMBER] = value
         }
 
     private fun File.newWriter() : Writer
     {
         return BufferedWriter(FileWriter(this))
     }
-
-    //endregion
-
 }

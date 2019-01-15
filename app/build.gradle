@@ -15,23 +15,17 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
-hello {
-    message "Hi 123"
-}
-
 versionIncrement {
     increments {
 
         debug {
-            versionCodeIncrement 1
+            startBuildVersion 1
+            buildNumberStep 1
         }
 
         release {
-
-            int increment = 1000 - versionIncrement.versionCode % 1000
-
-            versionCodeIncrement increment
-            versionNameIncrement "0.0.1"
+            startBuildVersion 1
+            buildNumberStep 0
         }
     }
 }
