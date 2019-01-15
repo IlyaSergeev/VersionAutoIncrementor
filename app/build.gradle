@@ -23,8 +23,6 @@ android {
         incrementRules {
 
             debug {
-                startBuildVersion 1
-                buildNumberStep 1
                 applyPrefix true
             }
 
