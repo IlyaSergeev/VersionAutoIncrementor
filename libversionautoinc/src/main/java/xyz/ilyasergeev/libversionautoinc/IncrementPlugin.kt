@@ -28,31 +28,7 @@ class IncrementPlugin : Plugin<Project> {
         project.afterEvaluate {
             if (project.plugins.hasPlugin(IncrementPlugin::class.java)) {
 
-                project.tasks.create(
-                    "helpTask",
-                    HelpTask::class.java
-                ) {
-                    it.group = GROUP_NAME
-                    it.message = "$GROUP_NAME help"
-                    it.recipient = "start"
-
-                    project.plugins.forEach { plugin ->
-                        System.out.println("$plugin - ${plugin is IncrementPlugin}")
-                    }
-                    System.out.println("has plugins - ${project.plugins.hasPlugin(IncrementPlugin::class.java)}")
-                    val incExtention = project.extensions.getByType(AppExtension::class.java)
-
-                    incExtention.applicationVariants.all { variant ->
-                        System.out.println("variant - ${variant.name}")
-                        val increment = extension.increments
-                            .find { it.name == variant.name }
-                        if (increment != null) {
-                            System.out.println("incrementVersionOn${variant.name.capitalize()}")
-                        } else {
-                            System.out.println("no increment")
-                        }
-                    }
-                }
+                project.tasks.create("helpTask", HelpTask::class.java) { it.group = GROUP_NAME }
 
                 val incExtention = project.extensions.getByType(AppExtension::class.java)
 
