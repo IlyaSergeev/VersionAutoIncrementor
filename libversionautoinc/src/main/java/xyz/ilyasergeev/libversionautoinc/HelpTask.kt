@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskAction
 /**
  * Created by i-sergeev on 11/01/2019.
  */
-open class HelloTask : DefaultTask() {
+open class HelpTask : DefaultTask() {
     var message: String? = null
     var recipient: String? = null
 

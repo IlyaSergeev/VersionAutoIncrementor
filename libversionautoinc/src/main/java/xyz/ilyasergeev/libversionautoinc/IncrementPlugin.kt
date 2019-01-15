@@ -8,38 +8,38 @@ import org.gradle.api.Project
  * Created by i-sergeev on 11/01/2019.
  */
 class IncrementPlugin : Plugin<Project> {
+    companion object {
+        private const val GROUP_NAME = "Version incrementation"
+        private const val BLOCK_INCREMENT_EXTENTION = "versionIncrement"
+    }
+
     override fun apply(project: Project) {
 
         val store = AutoIncrementStore(project)
 
         val extension =
             project.extensions.create(
-                "versionIncrement",
+                BLOCK_INCREMENT_EXTENTION,
                 IncrementPluginExtension::class.java,
                 project.container(Increment::class.java),
                 store
-            )
-
-        val helloExtention =
-            project.extensions.create(
-                "hello",
-                HelloExtention::class.java
             )
 
         project.afterEvaluate {
             if (project.plugins.hasPlugin(IncrementPlugin::class.java)) {
 
                 project.tasks.create(
-                    "helloTask",
-                    HelloTask::class.java
+                    "helpTask",
+                    HelpTask::class.java
                 ) {
-                    it.message = helloExtention.message
-                    it.recipient = "test"
+                    it.group = GROUP_NAME
+                    it.message = "$GROUP_NAME help"
+                    it.recipient = "start"
 
                     project.plugins.forEach { plugin ->
                         System.out.println("$plugin - ${plugin is IncrementPlugin}")
                     }
-                    System.out.println("has plugin - ${project.plugins.hasPlugin(IncrementPlugin::class.java)}")
+                    System.out.println("has plugins - ${project.plugins.hasPlugin(IncrementPlugin::class.java)}")
                     val incExtention = project.extensions.getByType(AppExtension::class.java)
 
                     incExtention.applicationVariants.all { variant ->
@@ -65,7 +65,7 @@ class IncrementPlugin : Plugin<Project> {
                             IncrementTask::class.java
                         ) {
 
-                            it.group = "Version incrementation"
+                            it.group = GROUP_NAME
 
                             System.out.printf(extension.toString())
                             it.message = extension.versionName
