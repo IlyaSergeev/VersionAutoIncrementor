@@ -9,7 +9,8 @@ import java.util.*
  */
 class AutoIncrementStore(private val project : Project)
 {
-    companion object {
+    companion object
+    {
         private const val FIELD_BUILD_NUMBER = "BUILD_NUMBER"
     }
 

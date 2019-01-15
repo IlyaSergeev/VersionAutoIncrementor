@@ -6,13 +6,15 @@ import org.gradle.api.tasks.TaskAction
 /**
  * Created by i-sergeev on 11/01/2019.
  */
-open class IncrementTask : DefaultTask() {
-    internal lateinit var store: AutoIncrementStore
+open class IncrementTask : DefaultTask()
+{
+    internal lateinit var store : AutoIncrementStore
     internal var startBuildNumber : Int = 0
     internal var buildNumberStep : Int = 0
 
     @TaskAction
-    internal fun incrementBuild() {
+    internal fun incrementBuild()
+    {
         val lastBuildVersion = store.buildNumber ?: startBuildNumber.also {
             store.buildNumber = it
         }
