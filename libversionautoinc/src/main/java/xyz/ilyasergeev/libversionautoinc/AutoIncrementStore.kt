@@ -13,8 +13,8 @@ class AutoIncrementStore(private val project : Project)
         private const val FIELD_BUILD_NUMBER = "BUILD_NUMBER"
     }
 
-    var buildNumber : Int
-        get() = properties.versionName ?: 1
+    var buildNumber : Int?
+        get() = properties.versionName
         internal set(value)
         {
             properties.versionName = value

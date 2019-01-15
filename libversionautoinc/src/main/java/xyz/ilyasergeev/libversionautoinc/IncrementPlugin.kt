@@ -44,9 +44,9 @@ class IncrementPlugin : Plugin<Project> {
                             it.group = GROUP_NAME
 
                             System.out.printf(extension.toString())
-                            it.message = extension.startBuildNumber.toString()
-                            it.recipient = "test"
-
+                            it.store = store
+                            it.startBuildNumber = increment.startBuildVersion
+                            it.buildNumberStep = increment.buildNumberStep
                         }
 
                         variant.preBuild.dependsOn(task)
