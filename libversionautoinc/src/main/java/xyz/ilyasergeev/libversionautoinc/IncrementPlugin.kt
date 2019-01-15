@@ -65,7 +65,7 @@ class IncrementPlugin : Plugin<Project> {
                             IncrementTask::class.java
                         ) {
 
-                            it.group = "Auto incrementor"
+                            it.group = "Version incrementation"
 
                             System.out.printf(extension.toString())
                             it.message = extension.versionName
