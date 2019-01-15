@@ -5,26 +5,28 @@ import com.sun.org.apache.xpath.internal.operations.Bool
 /**
  * Created by i-sergeev on 14/01/2019.
  */
-class IncrementRule constructor(val name : String)
-{
+class IncrementRule constructor(val name: String) {
     var startBuildVersion = 1
 
     var buildNumberStep = 1
 
     var applyPrefix = false
 
-    fun startBuildVersion(startBuildVersion : Int)
-    {
+    var versionName = ""
+
+    fun startBuildVersion(startBuildVersion: Int) {
         this.startBuildVersion = startBuildVersion
     }
 
-    fun buildNumberStep(buildNumberStep : Int)
-    {
+    fun buildNumberStep(buildNumberStep: Int) {
         this.buildNumberStep = buildNumberStep
     }
 
-    fun applyPrefix(applyPrefix : Boolean)
-    {
+    fun applyPrefix(applyPrefix: Boolean) {
         this.applyPrefix = applyPrefix
+    }
+
+    fun versionName(versionName: String) {
+        this.versionName = versionName
     }
 }

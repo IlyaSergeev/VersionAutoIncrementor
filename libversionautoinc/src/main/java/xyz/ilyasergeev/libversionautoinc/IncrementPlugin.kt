@@ -57,6 +57,7 @@ class IncrementPlugin : Plugin<Project>
                             incrementTask.appExtension = appExtension
                         }
 
+                        System.out.println("${variant.name}")
                         variant.preBuild.dependsOn(task)
                     }
                 }

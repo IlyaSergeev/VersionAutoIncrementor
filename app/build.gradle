@@ -15,25 +15,29 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
-versionIncrement {
-    incrementRules {
-
-        debug {
-            startBuildVersion 1
-            buildNumberStep 1
-            applyPrefix true
-        }
-
-        release {
-            applyPrefix false
-        }
-    }
-}
+def applicationName = "autoincremention"
 
 android {
+
+    versionIncrement {
+        incrementRules {
+
+            debug {
+                startBuildVersion 1
+                buildNumberStep 1
+                applyPrefix true
+            }
+
+            release {
+                applyPrefix false
+            }
+        }
+    }
+
+
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.hensh.autoincremention"
+        applicationId "com.hensh." + applicationName
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -44,6 +48,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${applicationName}-${variant.buildType.name}-${variant.versionName}.apk"
         }
     }
 }
