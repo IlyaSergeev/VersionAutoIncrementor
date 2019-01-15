@@ -4,7 +4,6 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-import kotlin.reflect.full.declaredFunctions
 
 /**
  * Created by i-sergeev on 11/01/2019.
@@ -13,8 +12,7 @@ open class IncrementTask : DefaultTask()
 {
     internal lateinit var store : AutoIncrementStore
     internal lateinit var variant : ApplicationVariant
-    internal var startBuildNumber : Int = 0
-    internal var buildNumberStep : Int = 0
+    internal lateinit var incrementRule : IncrementRule
     internal lateinit var appExtension : AppExtension
 
     private val willAssemble
@@ -29,23 +27,19 @@ open class IncrementTask : DefaultTask()
     @TaskAction
     internal fun incrementBuild()
     {
-        val lastBuildVersion = store.buildNumber ?: startBuildNumber.also {
-            store.buildNumber = it
+        if (incrementRule.applyPrefix && (willAssemble || singleIncrementTask))
+        {
+            val lastBuildVersion = store.buildNumber ?: incrementRule.startBuildVersion.also {
+                store.buildNumber = it
+            }
+
+            val incrementedBuildVersion = lastBuildVersion + incrementRule.buildNumberStep
+            store.buildNumber = incrementedBuildVersion
+
+            val newVersionName = "${appExtension.defaultConfig.versionName}($incrementedBuildVersion)"
+            System.out.printf("apply versionName=$newVersionName")
+
+            appExtension.defaultConfig.versionName = newVersionName
         }
-
-        val incrementedBuildVersion = lastBuildVersion + buildNumberStep
-        store.buildNumber = incrementedBuildVersion
-        System.out.printf("new version is $incrementedBuildVersion")
-
-        appExtension.defaultConfig.versionName = "${appExtension.defaultConfig.versionName}($incrementedBuildVersion)"
-    }
-
-    private fun ApplicationVariant.setVersionName(name : String)
-    {
-
-        mergedFlavor::class.declaredFunctions
-                .find { it.name == "setVersionName" }
-                ?.call(mergedFlavor , name)
-
     }
 }

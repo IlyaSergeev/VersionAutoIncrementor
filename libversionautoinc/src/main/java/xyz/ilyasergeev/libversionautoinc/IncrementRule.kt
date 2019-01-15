@@ -1,15 +1,17 @@
 package xyz.ilyasergeev.libversionautoinc
 
+import com.sun.org.apache.xpath.internal.operations.Bool
+
 /**
  * Created by i-sergeev on 14/01/2019.
  */
-class Increment constructor(val name : String)
+class IncrementRule constructor(val name : String)
 {
     var startBuildVersion = 1
-        private set
 
     var buildNumberStep = 1
-        private set
+
+    var applyPrefix = false
 
     fun startBuildVersion(startBuildVersion : Int)
     {
@@ -19,5 +21,10 @@ class Increment constructor(val name : String)
     fun buildNumberStep(buildNumberStep : Int)
     {
         this.buildNumberStep = buildNumberStep
+    }
+
+    fun applyPrefix(applyPrefix : Boolean)
+    {
+        this.applyPrefix = applyPrefix
     }
 }

@@ -7,7 +7,7 @@ import org.gradle.api.NamedDomainObjectContainer
  * Created by i-sergeev on 11/01/2019.
  */
 open class IncrementPluginExtension(
-        val increments : NamedDomainObjectContainer<Increment> ,
+        val incrementRules : NamedDomainObjectContainer<IncrementRule> ,
         private val store : AutoIncrementStore
 )
 {
@@ -15,8 +15,8 @@ open class IncrementPluginExtension(
 
     val buildNumberStep : Int get() = 0
 
-    fun increments(action : Action<in NamedDomainObjectContainer<Increment>>)
+    fun incrementRules(action : Action<in NamedDomainObjectContainer<IncrementRule>>)
     {
-        action.execute(increments)
+        action.execute(incrementRules)
     }
 }

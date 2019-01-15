@@ -16,16 +16,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
 versionIncrement {
-    increments {
+    incrementRules {
 
         debug {
             startBuildVersion 1
             buildNumberStep 1
+            applyPrefix true
         }
 
         release {
-            startBuildVersion 1
-            buildNumberStep 0
+            applyPrefix false
         }
     }
 }

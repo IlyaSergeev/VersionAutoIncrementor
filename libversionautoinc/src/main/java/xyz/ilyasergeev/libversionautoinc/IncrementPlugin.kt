@@ -23,7 +23,7 @@ class IncrementPlugin : Plugin<Project>
                 project.extensions.create(
                         BLOCK_INCREMENT_EXTENSION ,
                         IncrementPluginExtension::class.java ,
-                        project.container(Increment::class.java) ,
+                        project.container(IncrementRule::class.java) ,
                         store
                 )
 
@@ -38,7 +38,7 @@ class IncrementPlugin : Plugin<Project>
                 val appExtension = project.extensions.getByType(AppExtension::class.java)
 
                 appExtension.applicationVariants.all { variant ->
-                    val increment = extension.increments
+                    val increment = extension.incrementRules
                             .find { increment -> increment.name == variant.name }
 
                     if (increment != null)
@@ -53,8 +53,7 @@ class IncrementPlugin : Plugin<Project>
                             System.out.printf(extension.toString())
                             incrementTask.store = store
                             incrementTask.variant = variant
-                            incrementTask.startBuildNumber = increment.startBuildVersion
-                            incrementTask.buildNumberStep = increment.buildNumberStep
+                            incrementTask.incrementRule = increment
                             incrementTask.appExtension = appExtension
                         }
 
