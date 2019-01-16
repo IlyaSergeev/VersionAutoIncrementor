@@ -42,6 +42,7 @@ open class IncrementTask : DefaultTask() {
                 variant.outputs.all { output ->
                     if (output is ApkVariantOutput)
                     {
+                        output.outputFileName = "${output.outputFileName}-${variant.buildType.name}-$newVersionName.apk"
                         output.versionNameOverride = newVersionName
                         System.out.printf(output.outputFileName)
                     }

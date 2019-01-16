@@ -20,7 +20,7 @@ gradlePlugin {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly "com.android.tools.build:gradle:3.2.1"
+    compileOnly "com.android.tools.build:gradle:3.3.0"
 }
 
 publish {
