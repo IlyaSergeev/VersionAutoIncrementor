@@ -17,21 +17,20 @@ apply plugin: 'xyz.ilyasergeev.version-auto-inc'
 
 def applicationName = "autoincremention"
 
-android {
+versionIncrement {
+    incrementRules {
 
-    versionIncrement {
-        incrementRules {
+        debug {
+            applyPrefix true
+        }
 
-            debug {
-                applyPrefix true
-            }
-
-            release {
-                applyPrefix false
-            }
+        release {
+            applyPrefix false
         }
     }
+}
 
+android {
 
     compileSdkVersion 28
     defaultConfig {
