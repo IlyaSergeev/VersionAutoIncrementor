@@ -12,7 +12,7 @@ class IncrementRule constructor(val name: String) {
 
     var applyPrefix = false
 
-    var versionName = ""
+    var changeFileName = false
 
     fun startBuildVersion(startBuildVersion: Int) {
         this.startBuildVersion = startBuildVersion
@@ -26,7 +26,7 @@ class IncrementRule constructor(val name: String) {
         this.applyPrefix = applyPrefix
     }
 
-    fun versionName(versionName: String) {
-        this.versionName = versionName
+    fun changeFileName(changeFileName: Boolean) {
+        this.changeFileName = changeFileName
     }
 }

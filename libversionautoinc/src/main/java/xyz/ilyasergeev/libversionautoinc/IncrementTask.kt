@@ -29,6 +29,7 @@ open class IncrementTask : DefaultTask() {
 
         if ((willAssemble || singleIncrementTask)) {
 
+            val filePrefix: String
             if (incrementRule.applyPrefix) {
                 val lastBuildVersion = store.buildNumber ?: incrementRule.startBuildVersion.also {
                     store.buildNumber = it
@@ -40,14 +41,32 @@ open class IncrementTask : DefaultTask() {
                 val newVersionName = "${variant.versionName}($incrementedBuildVersion)"
 
                 variant.outputs.all { output ->
-                    if (output is ApkVariantOutput)
-                    {
-                        output.outputFileName = "${output.outputFileName}-${variant.buildType.name}-$newVersionName.apk"
+                    if (output is ApkVariantOutput) {
                         output.versionNameOverride = newVersionName
-                        System.out.printf(output.outputFileName)
+                    }
+                }
+                filePrefix = newVersionName
+            } else {
+                filePrefix = variant.versionName
+            }
+            if (incrementRule.changeFileName) {
+                variant.outputs.all { output ->
+                    if (output is ApkVariantOutput) {
+                        if (incrementRule.changeFileName) {
+                            output.outputFileName = addPrefixToFileName(output.outputFileName, "-$filePrefix")
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun addPrefixToFileName(fileName: String, prefix: String): String {
+        val extStartIndex = fileName.lastIndexOf(".")
+        return if (extStartIndex < fileName.length) {
+            fileName.substring(0, extStartIndex) + prefix + fileName.substring(extStartIndex, fileName.length)
+        } else {
+            fileName + prefix
         }
     }
 }

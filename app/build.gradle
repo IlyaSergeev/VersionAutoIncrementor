@@ -3,7 +3,7 @@ buildscript {
         maven { url("repo") }
     }
     dependencies {
-        classpath 'xyz.ilyasergeev:autoink:0.19'
+        classpath 'xyz.ilyasergeev:autoink:0.20'
     }
 }
 
@@ -22,10 +22,12 @@ versionIncrement {
 
         debug {
             applyPrefix true
+            changeFileName true
         }
 
         release {
             applyPrefix false
+            changeFileName true
         }
     }
 }
