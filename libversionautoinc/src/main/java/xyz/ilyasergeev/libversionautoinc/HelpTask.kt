@@ -29,18 +29,7 @@ open class HelpTask : DefaultTask()
         System.out.println()
         System.out.println("create tasks:")
         incExtention.applicationVariants.all { variant ->
-            val increment = extension.incrementRules
-                    .find { it.name == variant.name }
-
-            System.out.println("For variant ${variant.name}")
-            if (increment != null)
-            {
-                System.out.println("incrementVersionOn${variant.name.capitalize()}")
-            }
-            else
-            {
-                System.out.println("no incrementRule")
-            }
+            System.out.println("For variant ${variant.name} -> incrementVersionOn${variant.name.capitalize()}")
         }
     }
 }

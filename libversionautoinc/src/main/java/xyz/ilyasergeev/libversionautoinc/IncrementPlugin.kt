@@ -12,19 +12,10 @@ import org.gradle.api.tasks.TaskProvider
 class IncrementPlugin : Plugin<Project> {
     companion object {
         private const val GROUP_NAME = "Version incrementation"
-        private const val BLOCK_INCREMENT_EXTENSION = "versionIncrement"
     }
 
     override fun apply(project: Project) {
         val store = AutoIncrementStore(project)
-
-        val extension =
-            project.extensions.create(
-                BLOCK_INCREMENT_EXTENSION,
-                IncrementPluginExtension::class.java,
-                project.container(IncrementRule::class.java),
-                store
-            )
 
         project.afterEvaluate {
             if (project.plugins.hasPlugin(IncrementPlugin::class.java)) {
@@ -43,10 +34,7 @@ class IncrementPlugin : Plugin<Project> {
 
                 val tasks = arrayListOf<TaskProvider<SetVersionTask>>()
                 appExtension.applicationVariants.all { variant ->
-                    val increment = extension.incrementRules
-                        .find { increment -> increment.name == variant.name }
 
-                    if (increment != null) {
                         val task = project.tasks.register(
                             "setBuildVersion${variant.name.capitalize()}",
                             SetVersionTask::class.java
@@ -55,7 +43,6 @@ class IncrementPlugin : Plugin<Project> {
                             incrementTask.group = GROUP_NAME
 
                             incrementTask.variant = variant
-                            incrementTask.incrementRule = increment
                             incrementTask.appExtension = appExtension
                             incrementTask.buildVersion = store.buildNumber ?: 0
                         }
@@ -64,7 +51,6 @@ class IncrementPlugin : Plugin<Project> {
                         variant.preBuildProvider.dependsOn(task)
                         task.dependsOn(incrementVersionTask)
                     }
-                }
             }
         }
     }

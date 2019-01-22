@@ -11,7 +11,6 @@ import org.gradle.api.tasks.TaskAction
  */
 open class SetVersionTask : DefaultTask() {
     internal lateinit var variant: ApplicationVariant
-    internal lateinit var incrementRule: IncrementRule
     internal lateinit var appExtension: AppExtension
     internal var buildVersion: Int = 0
 
@@ -29,38 +28,13 @@ open class SetVersionTask : DefaultTask() {
 
         if ((willAssemble || singleIncrementTask)) {
 
-            val filePrefix: String
-            if (incrementRule.applyPrefix) {
+            val newVersionName = "${variant.versionName}($buildVersion)"
 
-                val newVersionName = "${variant.versionName}($buildVersion)"
-
-                variant.outputs.all { output ->
-                    if (output is ApkVariantOutput) {
-                        output.versionNameOverride = newVersionName
-                    }
-                }
-                filePrefix = newVersionName
-            } else {
-                filePrefix = variant.versionName
-            }
-            if (incrementRule.changeFileName) {
-                variant.outputs.all { output ->
-                    if (output is ApkVariantOutput) {
-                        if (incrementRule.changeFileName) {
-                            output.outputFileName = addPrefixToFileName(output.outputFileName, "-$filePrefix")
-                        }
-                    }
+            variant.outputs.all { output ->
+                if (output is ApkVariantOutput) {
+                    output.versionNameOverride = newVersionName
                 }
             }
-        }
-    }
-
-    private fun addPrefixToFileName(fileName: String, prefix: String): String {
-        val extStartIndex = fileName.lastIndexOf(".")
-        return if (extStartIndex < fileName.length) {
-            fileName.substring(0, extStartIndex) + prefix + fileName.substring(extStartIndex, fileName.length)
-        } else {
-            fileName + prefix
         }
     }
 }
