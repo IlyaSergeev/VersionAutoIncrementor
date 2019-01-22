@@ -9,11 +9,11 @@ import org.gradle.api.tasks.TaskAction
 /**
  * Created by i-sergeev on 11/01/2019.
  */
-open class IncrementTask : DefaultTask() {
-    internal lateinit var store: AutoIncrementStore
+open class SetVersionTask : DefaultTask() {
     internal lateinit var variant: ApplicationVariant
     internal lateinit var incrementRule: IncrementRule
     internal lateinit var appExtension: AppExtension
+    internal var buildVersion: Int = 0
 
     private val willAssemble
         get() = project.gradle.taskGraph.allTasks
@@ -31,14 +31,8 @@ open class IncrementTask : DefaultTask() {
 
             val filePrefix: String
             if (incrementRule.applyPrefix) {
-                val lastBuildVersion = store.buildNumber ?: incrementRule.startBuildVersion.also {
-                    store.buildNumber = it
-                }
 
-                val incrementedBuildVersion = lastBuildVersion + incrementRule.buildNumberStep
-                store.buildNumber = incrementedBuildVersion
-
-                val newVersionName = "${variant.versionName}($incrementedBuildVersion)"
+                val newVersionName = "${variant.versionName}($buildVersion)"
 
                 variant.outputs.all { output ->
                     if (output is ApkVariantOutput) {

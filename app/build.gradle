@@ -3,7 +3,7 @@ buildscript {
         maven { url("repo") }
     }
     dependencies {
-        classpath 'xyz.ilyasergeev:autoink:0.20'
+        classpath 'xyz.ilyasergeev:autoink:0.21'
     }
 }
 
@@ -20,13 +20,23 @@ def applicationName = "autoincremention"
 versionIncrement {
     incrementRules {
 
-        debug {
+        devDebug {
             applyPrefix true
             changeFileName true
         }
 
-        release {
-            applyPrefix false
+        prodDebug {
+            applyPrefix true
+            changeFileName true
+        }
+
+        devRelease {
+            applyPrefix true
+            changeFileName true
+        }
+
+        prodRelease {
+            applyPrefix true
             changeFileName true
         }
     }
@@ -36,7 +46,7 @@ android {
 
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.hensh." + applicationName
+
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -47,6 +57,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            applicationId "com.hensh." + applicationName + ".dev"
+        }
+        prod {
+            applicationId "com.hensh." + applicationName
         }
     }
 }
